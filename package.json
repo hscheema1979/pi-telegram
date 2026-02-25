@@ -1,0 +1,50 @@
+{
+  "name": "pi-telegram",
+  "version": "0.1.0",
+  "description": "Telegram bot integration for pi coding agent with full agentic conversations",
+  "type": "module",
+  "main": "dist/main.js",
+  "bin": {
+    "pi-telegram": "dist/main.js"
+  },
+  "scripts": {
+    "dev": "tsx watch src/main.ts",
+    "build": "tsc",
+    "start": "node dist/main.js",
+    "type-check": "tsc --noEmit",
+    "test": "vitest",
+    "lint": "eslint src --ext .ts"
+  },
+  "keywords": [
+    "pi",
+    "telegram",
+    "bot",
+    "agent",
+    "coding",
+    "OMC"
+  ],
+  "author": "Harpreet Cheema",
+  "license": "MIT",
+  "dependencies": {
+    "@mariozechner/pi-coding-agent": "latest",
+    "node-telegram-bot-api": "^0.63.0",
+    "dotenv": "^16.3.1",
+    "pino": "^8.17.0",
+    "pino-pretty": "^10.2.3",
+    "sqlite3": "^5.1.6",
+    "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/uuid": "^9.0.7",
+    "typescript": "^5.0.0",
+    "tsx": "^4.7.0",
+    "eslint": "^8.56.0",
+    "@typescript-eslint/eslint-plugin": "^6.17.0",
+    "@typescript-eslint/parser": "^6.17.0",
+    "vitest": "^1.1.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
