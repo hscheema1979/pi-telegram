@@ -6,6 +6,7 @@
  */
 
 import TelegramBot from "node-telegram-bot-api";
+import type { Message as TelegramMessage } from "node-telegram-bot-api";
 import { Config } from "../config/settings.js";
 import { logger } from "../utils/logger.js";
 import { PiIntegration } from "../pi/integration.js";
@@ -69,11 +70,11 @@ export class PiTelegramBot {
       await this.sessionManager.initialize();
 
       // Register error handlers
-      this.telegramBot.on("error", (error) => {
+      this.telegramBot.on("error", (error: any) => {
         logger.error("Telegram bot error:", error);
       });
 
-      this.telegramBot.on("polling_error", (error) => {
+      this.telegramBot.on("polling_error", (error: any) => {
         logger.error("Polling error:", error);
       });
 
@@ -137,7 +138,7 @@ export class PiTelegramBot {
    */
   private registerCommandHandlers(): void {
     // /help command
-    this.telegramBot.onText(/\/help/, async (msg) => {
+    this.telegramBot.onText(/\/help/, async (msg: TelegramMessage) => {
       const chatId = msg.chat.id;
       try {
         await this.telegramBot.sendMessage(chatId, HELP_MESSAGE, {
@@ -150,7 +151,7 @@ export class PiTelegramBot {
     });
 
     // /start command
-    this.telegramBot.onText(/\/start/, async (msg) => {
+    this.telegramBot.onText(/\/start/, async (msg: TelegramMessage) => {
       const chatId = msg.chat.id;
       try {
         await this.telegramBot.sendMessage(
@@ -164,7 +165,7 @@ export class PiTelegramBot {
     });
 
     // /status command
-    this.telegramBot.onText(/\/status/, async (msg) => {
+    this.telegramBot.onText(/\/status/, async (msg: TelegramMessage) => {
       const chatId = msg.chat.id;
       try {
         const sessionCount = this.piIntegration.getSessionCount();
@@ -187,7 +188,7 @@ Ready to handle requests!
     });
 
     // /clear command
-    this.telegramBot.onText(/\/clear/, async (msg) => {
+    this.telegramBot.onText(/\/clear/, async (msg: TelegramMessage) => {
       const chatId = msg.chat.id;
       try {
         const threadId = msg.message_thread_id;
@@ -204,7 +205,7 @@ Ready to handle requests!
     });
 
     // /about command
-    this.telegramBot.onText(/\/about/, async (msg) => {
+    this.telegramBot.onText(/\/about/, async (msg: TelegramMessage) => {
       const chatId = msg.chat.id;
       try {
         const about = `
@@ -243,7 +244,7 @@ Learn more: https://github.com/hscheema1979/pi-telegram
    * Register message handler for all other messages
    */
   private registerMessageHandler(): void {
-    this.telegramBot.on("message", async (msg) => {
+    this.telegramBot.on("message", async (msg: TelegramMessage) => {
       // Skip if no text (photo, file, etc)
       if (!msg.text || msg.text.startsWith("/")) {
         return;

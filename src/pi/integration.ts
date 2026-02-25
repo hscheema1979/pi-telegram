@@ -7,9 +7,7 @@
 
 import {
   createAgentSession,
-  AuthStorage,
   SessionManager as PiSessionManager,
-  ModelRegistry,
 } from "@mariozechner/pi-coding-agent";
 import { logger } from "../utils/logger.js";
 import { Config } from "../config/settings.js";
@@ -35,13 +33,9 @@ export interface PiResponse {
 export class PiIntegration {
   private sessions: Map<string, PiSession> = new Map();
   private config: Config;
-  private authStorage: AuthStorage;
-  private modelRegistry: ModelRegistry;
 
   constructor(config: Config) {
     this.config = config;
-    this.authStorage = new AuthStorage();
-    this.modelRegistry = new ModelRegistry(this.authStorage);
   }
 
   /**
@@ -78,11 +72,10 @@ export class PiIntegration {
     try {
       logger.info("Creating new pi session", { userId, threadId, sessionKey });
 
-      // Create new pi session
+      // Create new pi session using SDK
+      // The SDK will use existing authentication (ANTHROPIC_API_KEY or /login)
       const { session } = await createAgentSession({
         sessionManager: PiSessionManager.inMemory(),
-        authStorage: this.authStorage,
-        modelRegistry: this.modelRegistry,
       });
 
       const piSession: PiSession = {

@@ -6,6 +6,7 @@
  */
 
 import TelegramBot from "node-telegram-bot-api";
+import type { Message as TelegramMessage } from "node-telegram-bot-api";
 import { logger } from "../utils/logger.js";
 
 export interface StreamingOptions {
