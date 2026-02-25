@@ -1,7 +1,3 @@
-/**
- * Logging utility using pino
- */
-
 import pino from "pino";
 
 export const logger = pino(
